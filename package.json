@@ -1,0 +1,27 @@
+{
+  "name": "podcast",
+  "version": "1.0.0",
+  "description": "Trying next.js framework",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rammsesgit/podcast.git"
+  },
+  "author": "Isar Ramses Cadena Gaona",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rammsesgit/podcast/issues"
+  },
+  "homepage": "https://github.com/rammsesgit/podcast#readme",
+  "dependencies": {
+    "next": "^6.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "universal-fetch": "^1.0.0"
+  }
+}
