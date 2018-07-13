@@ -6,6 +6,8 @@ Trying Next.js framework using the AudioBoom API
 ![Channel](./.readme-static/channel.png)
 ![Podcast](./.readme-static/podcast.png)
 
+[See the application](https://podcast-whrtjqhzuu.now.sh/)
+
 ## How does it work?
 Requires Node.js 10
 
