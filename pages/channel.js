@@ -2,10 +2,17 @@ import 'isomorphic-fetch'
 import Error from './_error'
 import Layout from '../components/Layout'
 import ChannelGrid from '../components/ChannelGrid'
-import PodcastList from '../components/PodcastList'
-
+// import PodcastList from '../components/PodcastList'
+import PodcastListWithClick from '../components/PodcastListWithClick'
+import PodcastPlayer from '../components/PodcastPlayer'
 
 export default class extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = { openPodcast: null }
+  }
+
   static async getInitialProps({query, res}) {
     let idChannel = query.id
     try {
@@ -35,9 +42,24 @@ export default class extends React.Component {
       return { channel: null, audioClips: null, series: null, statusCode: 503 }
     }
   }
+
+  openPodcast = (event, podcast) => {
+    event.preventDefault()
+    this.setState({
+      openPodcast: podcast
+    })
+  }
+
+  closePodcast = event => {
+    event.preventDefault()
+    this.setState({
+      openPodcast: null
+    })
+  }
   
   render() {
     const { channel, audioClips, series, statusCode } = this.props
+    const {openPodcast} = this.state
 
     if (statusCode !== 200 ) {
       return <Error statusCode={statusCode}/>
@@ -45,6 +67,11 @@ export default class extends React.Component {
 
     return <Layout title={channel.title}>
       <div className="banner" style={{ backgroundImage: `url(${channel.urls.banner_image.original})` }} />
+
+      { openPodcast && <div className="modal">
+        <PodcastPlayer clip={openPodcast} onClose={ this.closePodcast }/>
+      </div> }
+
       <h1>{channel.title}</h1>
 
       { series.length > 0 &&
@@ -54,7 +81,7 @@ export default class extends React.Component {
         </div>
       }
       
-      <PodcastList audioClips={audioClips} />
+      <PodcastListWithClick podcasts={audioClips} onClickPodcast={ this.openPodcast } />
 
       <style jsx>{`
         .banner {
@@ -64,8 +91,20 @@ export default class extends React.Component {
           background-size: cover;
           background-color: #aaa;
         }
-        h2 {
+        h1 {
+          padding: 4px;
           text-align: center;
+        }
+        h2 {
+          margin-left: 14px;
+        }
+        .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-imdex: 99999;
         }
       `}</style>
     </Layout>
