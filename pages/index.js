@@ -4,13 +4,12 @@ import ChannelGrid from '../components/ChannelGrid'
 import Error from './_error'
 
 export default class extends React.Component {
-
-  static async getInitialProps({res}) {
+  static async getInitialProps({ res }) {
     try {
       let req = await fetch('https://api.audioboom.com/channels/recommended')
       let { body: channels } = await req.json()
       return { channels, statusCode: 200 }
-    } catch(e) {
+    } catch (e) {
       res.statusCode = 503
       return { channels: null, statusCode: 503 }
     }
@@ -19,12 +18,14 @@ export default class extends React.Component {
   render() {
     const { channels, statusCode } = this.props
 
-    if (statusCode !== 200 ) {
-      return <Error statusCode={statusCode}/>
-    } 
+    if (statusCode !== 200) {
+      return <Error statusCode={statusCode} />
+    }
 
-    return <Layout title="Podcast">
-      <ChannelGrid channels={channels}/>
-    </Layout>
+    return (
+      <Layout title='Podcast'>
+        <ChannelGrid channels={channels} />
+      </Layout>
+    )
   }
 }
